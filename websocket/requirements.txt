@@ -1,0 +1,17 @@
+django-cors-headers==4.2.0
+django-filter==23.3
+djangorestframework==3.14.0
+redis==5.0.1
+jdatetime==5.0.0
+Django==4.2
+drf-yasg==1.21.11
+psycopg2-binary==2.9.9
+requests==2.31.0
+python-decouple
+gunicorn
+whitenoise
+channels[daphne] >4,<5
+daphne
+Twisted[tls,http2]
+channels_redis
+celery
