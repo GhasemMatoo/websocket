@@ -8,3 +8,10 @@ class IndexView(View):
 
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
+
+
+class EchoImageView(View):
+    template_name = "../templates/echo/echo-image.html"
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
