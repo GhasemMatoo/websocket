@@ -4,5 +4,7 @@ from django.views import View
 
 # Create your views here.
 class IndexView(View):
-    def get(self, request):
-        return HttpResponse('Hello World')
+    template_name = "../templates/echo/index.html"
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
