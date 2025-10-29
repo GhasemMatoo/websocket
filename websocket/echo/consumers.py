@@ -1,3 +1,4 @@
+import json
 from channels.generic.websocket import WebsocketConsumer
 
 
@@ -24,3 +25,17 @@ class EchoImages(WebsocketConsumer):
             self.send(text_data=text_data)
         if bytes_data is not None:
             self.send(bytes_data=bytes_data)
+
+
+class Chat(WebsocketConsumer):
+    def connect(self):
+        print(self.channel_name)
+        self.accept()
+
+    def disconnect(self, close_code):
+        pass
+
+    def receive(self, text_data=None, bytes_data=None):
+        if text_data is not None:
+            text_data_json = json.loads(text_data)
+
