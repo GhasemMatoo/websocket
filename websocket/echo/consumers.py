@@ -4,14 +4,22 @@ from channels.generic.websocket import WebsocketConsumer, AsyncWebsocketConsumer
 
 
 class EchoConsumer(WebsocketConsumer):
+    group_name = None
+
     def connect(self):
+        self.group_name = "echo_1"
+        async_to_sync(self.channel_layer.group_add)(self.group_name, self.channel_name)
         self.accept()
 
     def disconnect(self, close_code):
-        pass
+        async_to_sync(self.channel_layer.group_discard)(self.group_name, self.channel_name)
 
     def receive(self, text_data=None, bytes_data=None):
         self.send(text_data=text_data)
+
+    def send_echo_message(self, event):
+        message = event['message']
+        self.send(text_data=message)
 
 
 class EchoImages(WebsocketConsumer):
@@ -52,6 +60,7 @@ class Chat(AsyncWebsocketConsumer):
             #     user_group_name, {'type': 'chat_message', 'message': text_data})
             await self.channel_layer.group_send(
                 user_group_name, {'type': 'chat_message', 'message': text_data})  # update: async
+            await self.channel_layer.group_send("echo_1", {'type': 'send_echo_message', 'message': text_data})
 
     async def chat_message(self, event):
         message = event['message']
