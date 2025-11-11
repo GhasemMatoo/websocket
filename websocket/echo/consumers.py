@@ -10,6 +10,8 @@ class EchoConsumer(WebsocketConsumer):
     def connect(self):
         self.group_name = "echo_1"
         self.user = self.scope.get("user", False)
+        self.scope["session"]["user"] = self.user
+        self.scope["session"].save()
         if self.user and self.user.is_active:
             async_to_sync(self.channel_layer.group_add)(self.group_name, self.channel_name)
             self.accept()
