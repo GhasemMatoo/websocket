@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ["localhost", ]
 INSTALLED_APPS = [
     "daphne",
     "echo.apps.EchoConfig",
+    "chat.apps.ChatConfig",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
