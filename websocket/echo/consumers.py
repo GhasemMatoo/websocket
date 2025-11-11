@@ -5,11 +5,16 @@ from channels.generic.websocket import WebsocketConsumer, AsyncWebsocketConsumer
 
 class EchoConsumer(WebsocketConsumer):
     group_name = None
+    user = None
 
     def connect(self):
         self.group_name = "echo_1"
-        async_to_sync(self.channel_layer.group_add)(self.group_name, self.channel_name)
-        self.accept()
+        self.user = self.scope.get("user", False)
+        if self.user and self.user.is_active:
+            async_to_sync(self.channel_layer.group_add)(self.group_name, self.channel_name)
+            self.accept()
+        else:
+            self.close(403)
 
     def disconnect(self, close_code):
         async_to_sync(self.channel_layer.group_discard)(self.group_name, self.channel_name)
