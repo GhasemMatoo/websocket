@@ -4,5 +4,5 @@ from echo import consumers
 websocket_urlpatterns = [
     path('ws/', consumers.EchoConsumer.as_asgi()),
     path('ws/echo-image/', consumers.EchoImages.as_asgi()),
-    path('ws/chat/<str:username>/', consumers.Chat.as_asgi()),
+    path('ws/echo/chat/<str:username>/', consumers.Chat.as_asgi()),
 ]
